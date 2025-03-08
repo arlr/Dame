@@ -48,27 +48,38 @@ unsigned char board[8][8] = {
 public:
     dame(/* args */);
     void print_board();
+    void print_gameinfo();
     ~dame();
 
 };
 
 dame::dame(/* args */)
 {
-    // Choose randomly the plyer color
-    if( rand() % 2){
+    // Choose randomly the player color
+    srand(time(nullptr));
+    int myrand = std::rand();
+    if(myrand % 2){
         isplayer_white = true;
     }
 }
 
 void dame::print_board()
+// Print game board
 {
     for( uint8_t i = 0; i < 8; i++){
         for (uint8_t j = 0; j < 8; j++)
         {
             std::cout << board[i][j] << " ";
         }
-        std::cout << '\n';
-        
+        std::cout << '\n';       
+    }
+}
+
+void dame::print_gameinfo(){
+    if(isplayer_white){
+        std::cout << "Player use White pices\n";
+    }else{
+        std::cout << "Player use Black pices\n";
     }
 }
 
@@ -83,6 +94,7 @@ int main()
     cout << "Dame game\n";
     dame mygame;
     mygame.print_board();
+    mygame.print_gameinfo();
     return 0;
 }
 
