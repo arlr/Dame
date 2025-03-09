@@ -11,81 +11,41 @@ class dame
 private:
     // A 2D array representing the game board with characters 'N' indicating an empty space.
     unsigned char board[8][8] = {
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'},
-        {'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'}};
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
 
     // An array of pion objects representing all the pieces on the board.
-    pion pion_board[64] = {
-        pion(0, 0, 'N'),
-        pion(0, 1, 'N'),
-        pion(0, 2, 'N'),
-        pion(0, 3, 'N'),
-        pion(0, 4, 'N'),
-        pion(0, 5, 'N'),
-        pion(0, 6, 'N'),
-        pion(0, 7, 'N'),
-        pion(1, 0, 'N'),
-        pion(1, 1, 'N'),
-        pion(1, 2, 'N'),
-        pion(1, 3, 'N'),
-        pion(1, 4, 'N'),
-        pion(1, 5, 'N'),
-        pion(1, 6, 'N'),
-        pion(1, 7, 'N'),
-        pion(2, 0, 'N'),
-        pion(2, 1, 'N'),
-        pion(2, 2, 'N'),
-        pion(2, 3, 'N'),
-        pion(2, 4, 'N'),
-        pion(2, 5, 'N'),
-        pion(2, 6, 'N'),
-        pion(2, 7, 'N'),
-        pion(3, 0, 'N'),
-        pion(3, 1, 'N'),
-        pion(3, 2, 'N'),
-        pion(3, 3, 'N'),
-        pion(3, 4, 'N'),
-        pion(3, 5, 'N'),
-        pion(3, 6, 'N'),
-        pion(3, 7, 'N'),
-        pion(4, 0, 'N'),
-        pion(4, 1, 'N'),
-        pion(4, 2, 'N'),
-        pion(4, 3, 'N'),
-        pion(4, 4, 'N'),
-        pion(4, 5, 'N'),
-        pion(4, 6, 'N'),
-        pion(4, 7, 'N'),
-        pion(5, 0, 'N'),
-        pion(5, 1, 'N'),
-        pion(5, 2, 'N'),
-        pion(5, 3, 'N'),
-        pion(5, 4, 'N'),
-        pion(5, 5, 'N'),
-        pion(5, 6, 'N'),
-        pion(5, 7, 'N'),
-        pion(6, 0, 'N'),
-        pion(6, 1, 'N'),
-        pion(6, 2, 'N'),
-        pion(6, 3, 'N'),
-        pion(6, 4, 'N'),
-        pion(6, 5, 'N'),
-        pion(6, 6, 'N'),
-        pion(6, 7, 'N'),
-        pion(7, 0, 'N'),
-        pion(7, 1, 'N'),
-        pion(7, 2, 'N'),
-        pion(7, 3, 'N'),
-        pion(7, 4, 'N'),
-        pion(7, 5, 'N'),
-        pion(7, 6, 'N'),
-        pion(7, 7, 'N'),
+    pion pion_board[24] = {
+        pion(0, 1, 'B'),
+        pion(0, 3, 'B'),
+        pion(0, 5, 'B'),
+        pion(0, 7, 'B'),
+        pion(1, 0, 'B'),
+        pion(1, 2, 'B'),
+        pion(1, 4, 'B'),
+        pion(1, 6, 'B'),
+        pion(2, 1, 'B'),
+        pion(2, 3, 'B'),
+        pion(2, 5, 'B'),
+        pion(2, 7, 'B'),
+        pion(5, 0, 'W'),
+        pion(5, 2, 'W'),
+        pion(5, 4, 'W'),
+        pion(5, 6, 'W'),
+        pion(6, 1, 'W'),
+        pion(6, 3, 'W'),
+        pion(6, 5, 'W'),
+        pion(6, 7, 'W'),
+        pion(7, 0, 'W'),
+        pion(7, 2, 'W'),
+        pion(7, 4, 'W'),
+        pion(7, 6, 'W'),
     };
 
     // Boolean variable to indicate if the player is using white pieces or not.
@@ -113,6 +73,8 @@ public:
     // Function to get the pion at a given x and y coordinate on the board.
     int get_pion(unsigned char x, unsigned char y, pion &pout_pion);
 
+    void populate_board();
+
     // Destructor for the dame class (currently empty).
     ~dame();
 };
@@ -128,11 +90,33 @@ dame::dame()
     }
 }
 
+void dame::populate_board()
+{
+    pion tmp_pion = pion(0, 0,' ');
+    for (unsigned char i = 0; i < 8; i++)
+    {
+        for (unsigned char j = 0; j < 8; j++)
+        {
+            if(get_pion(i, j, tmp_pion))
+            {
+                board[i][j] = tmp_pion.get_color();
+            }
+            else
+            {
+                board[i][j] = ' ';
+            }
+            
+        }
+    }
+}
+
 // Function to print the current state of the game board to the console.
 void dame::print_board()
 {
+    populate_board();
+    cout << "  A B C D E F G H" << endl;
     for (uint8_t i = 0; i < 8; i++)
-    {
+    {   cout << i + 1 << " ";
         for (uint8_t j = 0; j < 8; j++)
         {
             cout << board[i][j] << " ";
